@@ -1,6 +1,6 @@
-# `roastery`
+# Roastery
 
-`roastery` is a framework for effectively working with the Beancount plain text
+Roastery is a framework for effectively working with the Beancount plain text
 accounting software.
 
 ## Features

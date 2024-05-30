@@ -1,12 +1,12 @@
 Architecture
 ============
 
-This page documents ``roastery``'s architecture.
+This page documents Roastery's architecture.
 
 Roastery is a Python library
 ----------------------------
 
-The primary way of using ``roastery`` is through a Python API. You can install
+The primary way of using Roastery is through a Python API. You can install
 ``roastery`` into a virtualenv (or similar) and then ``import roastery`` as a
 Python library.
 
@@ -23,7 +23,7 @@ very similar way as you can do with beancount itself.
 Import
 ------
 
-The ``roastery`` import process turns statement information from you bank /
+The Roastery import process turns statement information from you bank /
 financial instituation into beancount ledger files.
 
 The import process works in three stages:
@@ -41,7 +41,7 @@ See also :doc:`/api/importer`.
 Clean up
 --------
 
-Without further configuration, ``roastery`` will not perform any clean up on
+Without further configuration, Roastery will not perform any clean up on
 your transaction data. Transactions from your statements keep their original
 descriptions and metadata, and are either classified as ``Income:Unknown`` or
 ``Expenses:Unknown``.
@@ -57,9 +57,9 @@ Roastery provides two methods to clean up transaction data:
 
    Attempting to automate all manual cleanup / classification has deminishing
    returns. You will likely end up with a large amount of one-off rules. Prefer to
-   use ``roastery``'s CLI utilities instead.
+   use Roastery's CLI utilities instead.
 
 Advice: start by manually cleaning your transactions. This isn't as tedious as
-you may think if you use the CLI utilities from ``roastery``. Write rules to
+you may think if you use the CLI utilities from Roastery. Write rules to
 automate cleanup once you find yourself repeatedly performing the same bit of
 clean up.
