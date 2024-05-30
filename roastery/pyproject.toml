@@ -1,0 +1,23 @@
+[project]
+name = "roastery"
+version = "202405"
+dependencies = [
+    "beancount>=2.3.6",
+    "typer>=0.12.3",
+    "fava>=1.27.3",
+    "prompt-toolkit>=3.0.45",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/roastery"]
