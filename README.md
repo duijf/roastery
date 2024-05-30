@@ -48,8 +48,3 @@ $ pip install "git+https://github.com/duijf/roastery.git?subdirectory=roastery"
 ```
 
 TODO: Publish on PyPI.
-
-
-## License
-
-TODO: Choose a license.
