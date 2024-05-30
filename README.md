@@ -28,6 +28,12 @@ Over time, I things to stabilize and will update this notice accordingly.
 
 <!-- end-include-doc-landing -->
 
+## Installation
+
+```
+$ pip install roastery
+```
+
 ## Contributing
 
 Bug reports, bug fixes, and comments on the documentation are very welcome.
@@ -37,14 +43,5 @@ moment. Please reach out before you spend a lot of time on something.
 
 ## Documentation
 
-Roastery comes with a well-documented Python API and getting started guide.
-
-TODO: Host docs somewhere.
-
-## Installation
-
-```
-$ pip install "git+https://github.com/duijf/roastery.git?subdirectory=roastery"
-```
-
-TODO: Publish on PyPI.
+Roastery comes with a well-documented Python API and getting started guide that
+you can view at: https://roastery.duijf.io

@@ -1,13 +1,18 @@
 [project]
 name = "roastery"
-version = "202405"
+version = "0.20240530-dev"
 dependencies = [
     "beancount>=2.0.0",
     "typer>=0.12.0",
     "fava>=1.27.0",
     "prompt-toolkit>=3.0.0",
 ]
+authors = [
+    {name = "Laurens Duijvesteijn", email = "git@duijf.io"},
+]
+description = "Framework for Beancount plain text accounting"
 requires-python = ">= 3.11"
+readme = "README.md"
 
 [build-system]
 requires = ["hatchling"]
@@ -24,6 +29,9 @@ dev-dependencies = [
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/roastery"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/roastery"]
