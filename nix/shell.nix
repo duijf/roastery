@@ -1,7 +1,8 @@
 { mkShell
+, rye
 }:
 
 mkShell {
   name = "roastery-shell";
-  buildInputs = [];
+  buildInputs = [ rye ];
 }
