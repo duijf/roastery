@@ -46,6 +46,7 @@ click==8.1.7
 colorama==0.4.6
     # via sphinx-autobuild
 docutils==0.21.2
+    # via myst-parser
     # via sphinx
 fava==1.27.3
     # via roastery
@@ -87,21 +88,27 @@ jinja2==3.1.4
     # via fava
     # via flask
     # via flask-babel
+    # via myst-parser
     # via sphinx
 lxml==5.2.2
     # via beancount
 markdown-it-py==3.0.0
+    # via mdit-py-plugins
+    # via myst-parser
     # via rich
 markdown2==2.4.13
     # via fava
 markupsafe==2.1.5
     # via jinja2
     # via werkzeug
+mdit-py-plugins==0.4.1
+    # via myst-parser
 mdurl==0.1.2
     # via markdown-it-py
 more-itertools==10.2.0
     # via cheroot
     # via jaraco-functools
+myst-parser==3.0.1
 packaging==24.0
     # via pytest
     # via sphinx
@@ -139,6 +146,8 @@ python-magic==0.4.27
     # via beancount
 pytz==2024.1
     # via flask-babel
+pyyaml==6.0.1
+    # via myst-parser
 requests==2.32.3
     # via beancount
     # via google-api-core
@@ -162,6 +171,7 @@ soupsieve==2.5
     # via beautifulsoup4
 sphinx==7.3.7
     # via furo
+    # via myst-parser
     # via sphinx-autobuild
     # via sphinx-basic-ng
 sphinx-autobuild==2024.4.16

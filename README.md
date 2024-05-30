@@ -17,16 +17,6 @@ accounting software.
   Re-run your imports, and see the effect with a `git diff`. Manual edits are
   stored separately from original data, and the generated beancount files, so
   you can always re-run your imports.
-- **High quality documentation** &mdash; Roastery comes with a well-documented
-  Python API and getting started guide.
-
-## Installation
-
-```
-$ pip install "git+https://github.com/duijf/roastery.git?subdirectory=roastery"
-```
-
-TODO: Publish on PyPI.
 
 ## Project status
 
@@ -36,12 +26,29 @@ drastically overhaul the project without notice.
 
 Over time, I things to stabilize and will update this notice accordingly.
 
+<!-- end-include-doc-landing -->
+
 ## Contributing
 
 Bug reports, bug fixes, and comments on the documentation are very welcome.
 
 I am not sure if I want to take code contributions for new features at the
 moment. Please reach out before you spend a lot of time on something.
+
+## Documentation
+
+Roastery comes with a well-documented Python API and getting started guide.
+
+TODO: Host docs somewhere.
+
+## Installation
+
+```
+$ pip install "git+https://github.com/duijf/roastery.git?subdirectory=roastery"
+```
+
+TODO: Publish on PyPI.
+
 
 ## License
 
