@@ -1,5 +1,21 @@
 """
-Utilities for logging and asking user input.
+Utilities for logging and asking for user input.
+
+Logging
+-------
+
+.. autofunction:: roastery.term.log
+.. autofunction:: roastery.term.info
+.. autofunction:: roastery.term.error
+.. autofunction:: roastery.term.warn
+.. autofunction:: roastery.term.hint
+.. autofunction:: roastery.term.executing
+
+User input
+----------
+
+.. autofunction:: roastery.term.ask
+.. autofunction:: roastery.term.select_fuzzy_search
 """
 import subprocess
 
@@ -17,7 +33,6 @@ __all__ = [
     "warn",
     "hint",
     "executing",
-    #: Foo
     "ask",
     "select_fuzzy_search",
 ]
@@ -25,21 +40,21 @@ __all__ = [
 
 def error(*contents: str):
     """Log the `contents` to the terminal as an error.
-    
+
     :param contents: String containing the log message in Rich Markup."""
     log(*contents, header="error", style="red bold")
 
 
 def warn(*contents: str):
-    f"""Log the `contents` to the terminal as a warning.
-    
+    """Log the `contents` to the terminal as a warning.
+
     :param contents: String containing the log message in Rich Markup."""
     log(*contents, header="warning", style="yellow bold")
 
 
 def hint(*contents: str):
     """Log the `contents` to the terminal as a hint.
-    
+
     :param contents: String containing the log message in Rich Markup."""
     log(*contents, header="hint", style="blue bold")
 
@@ -54,7 +69,7 @@ def info(*contents: str):
 
 def executing(command: list[str]):
     """Log that the program is executing a command
-    
+
     :param command: The command that the program is executing. This is a list,
       to allow easy integration with `subprocess.run()`.
     """
