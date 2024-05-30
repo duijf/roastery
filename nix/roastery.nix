@@ -16,7 +16,7 @@ let
 
     buildPythonPackage {
       name = "roastery";
-      src = ../roastery;
+      src = ../.;
       format = "pyproject";
 
       nativeBuildInputs = [ hatchling ];
