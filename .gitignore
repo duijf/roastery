@@ -9,3 +9,6 @@ wheels/
 
 # Nix result symlinks
 result*
+
+# Generated documentation
+docs-html/
