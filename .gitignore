@@ -12,3 +12,6 @@ result*
 
 # Generated documentation
 docs/
+
+# Direnv
+.direnv/
