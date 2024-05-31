@@ -73,6 +73,6 @@ class Config:
         return cls(
             statements_dir=root / "statements",
             journal_path=root / "journal/main.beancount",
-            manual_edits_path=root / "data/manual-edits.json",
-            skip_path=root / "data/skip.json",
+            manual_edits_path=root / ".roastery/manual-edits.json",
+            skip_path=root / ".roastery/skip.json",
         )
