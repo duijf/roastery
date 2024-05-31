@@ -33,8 +33,9 @@ The import process works in three stages:
 2. **Clean up** --- Classify transactions. Clean up information such as payees
    and narration. This happens through either manual classification or automatic
    rules that can be programmed by the user.
-3. **Write to disk** --- Data files are written to disk as beancount ledger
-   files.
+3. **Write to disk** --- Data files are written to disk as Beancount ledger
+   files. You can then use all the normal Beancount tools, such as the Fava web
+   UI to view your data.
 
 See also :doc:`/api/importer`.
 
