@@ -20,11 +20,11 @@ accounting software.
 
 ## Project status
 
-Roastery is a personal project without stability promise or guarantees and
+Roastery is a personal project without stability promises or guarantees or
 warranty of any kind. I reserve the right to make breaking changes and
 drastically overhaul the project without notice.
 
-Over time, I things to stabilize and will update this notice accordingly.
+Over time, I expect things to stabilize and will update this notice accordingly.
 
 <!-- end-include-doc-landing -->
 
