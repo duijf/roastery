@@ -199,8 +199,15 @@ class Entry(Generic[EntryMeta]):
             flag=self.flag,
         )
 
-    def apply_manual_edits(self, edits: dict[Digest, ManualEdits]):
-        """Apply a user's manual edits to this entry."""
+    def apply_manual_edits(self, edits: dict[Digest, ManualEdits]) -> None:
+        """Apply manual edits to this entry.
+
+        :param edits: Dictionary of manual edits, as deserialized from
+          :py:obj:`roastery.config.Config.manual_edits_path`. The keys
+          are the digests of the entires. The values are
+          :py:class:`roastery.edit.ManualEdits` containing the updated
+          field values.
+        """
         if o := edits.get(self.digest):
             self.payee.edited = o.get("payee")
             self.account.edited = o.get("account")
@@ -256,7 +263,8 @@ def import_csv(
 
     :param csv_file: Path of the CSV file to import.
     :param config: Configuration to use.
-    :param csv_args: Arguments to forward to :py:class:`csv.DictReader`.
+    :param csv_args: Arguments to forward to :py:class:`csv.DictReader`. This is used to
+      parse weird CSV dialects. For example: ``dict(delimiter=";", quotechar="|")``.
     :param extract: How to extract an :class:`Entry` from a row of CSV data. See :py:class:`~ExtractFn`.
     :param clean: User-implemented cleaning function. See :py:class:`~CleanFn`.
     :param beancount_file: Path of the beancount file to write to.
