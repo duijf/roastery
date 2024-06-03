@@ -18,6 +18,7 @@ API
 """
 
 import dataclasses
+import datetime
 import os
 import sys
 from pathlib import Path
@@ -56,6 +57,12 @@ class Config:
     ``"Income:Unknown"``
       When :py:obj:`roastery.importer.Entry.is_income` returns ``True``.
      """
+
+    do_not_import_before: datetime.date = None
+    """Date before which to skip importing transactions.
+
+    This is useful if you want to keep a your entire history of financial statements and
+    gradually import / classify them."""
 
     @classmethod
     def from_env(cls, project_root: Path = None) -> "Config":

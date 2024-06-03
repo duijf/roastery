@@ -294,6 +294,12 @@ def import_csv(
         reader = csv.DictReader(f_csv, **_csv_args)
         for row in reader:
             entry = extract(row)
+
+            if (config.do_not_import_before is not None) and (
+                entry.date <= config.do_not_import_before
+            ):
+                continue
+
             entry.apply_manual_edits(manual_edits)
             _clean(entry)
             printer.print_entry(entry.as_transaction(), file=f_journal)

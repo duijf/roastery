@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 from typing import Iterator
 
@@ -18,6 +19,20 @@ def test_import_demo_csv(config: Config, demo_csv: Path) -> None:
     assert beancount_file.exists()
     entries, errors, options = loader.load_file(beancount_file)
     assert len(entries) == 3
+
+
+def test_import_cutoff(config: Config, demo_csv: Path) -> None:
+    config.do_not_import_before = datetime.date(2024, 5, 28)
+    beancount_file = demo_csv.with_suffix(".beancount")
+    import_csv(
+        config=config,
+        csv_file=demo_csv,
+        extract=formats.extract_demo,
+        csv_args=dict(delimiter=";"),
+    )
+    assert beancount_file.exists()
+    entries, errors, options = loader.load_file(beancount_file)
+    assert len(entries) == 2
 
 
 @pytest.fixture
