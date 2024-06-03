@@ -272,6 +272,9 @@ def import_csv(
     the extension changed to ``.beancount``. So: ``statements/foo.csv`` -> ``statements/foo.beancount``
     You can specify a different path with the ``beancount_file`` parameter.
 
+    The transaction is flagged with ``"!"`` if the digest of the entry occurs in the JSON file
+    at :obj:`roastery.config.Config.flags_path`.
+
     :param csv_file: Path of the CSV file to import.
     :param config: Configuration to use.
     :param csv_args: Arguments to forward to :py:class:`csv.DictReader`. This is used to
@@ -288,6 +291,11 @@ def import_csv(
     except FileNotFoundError:
         manual_edits = {}
 
+    try:
+        flags = json.loads(config.flags_path.read_text())
+    except FileNotFoundError:
+        flags = {}
+
     _csv_args = {} if csv_args is None else csv_args
     _clean = (lambda x: None) if clean is None else clean
 
@@ -297,6 +305,9 @@ def import_csv(
         reader = csv.DictReader(f_csv, **_csv_args)
         for row in reader:
             entry = extract(row)
+
+            if entry.digest in flags:
+                entry.flag = "!"
 
             if (config.do_not_import_before is not None) and (
                 entry.date <= config.do_not_import_before

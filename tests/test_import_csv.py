@@ -4,6 +4,7 @@ from typing import Iterator
 
 import pytest
 from beancount import loader
+from beancount.query.query import run_query
 
 from roastery import import_csv, Config, formats
 
@@ -33,6 +34,29 @@ def test_import_cutoff(config: Config, demo_csv: Path) -> None:
     assert beancount_file.exists()
     entries, errors, options = loader.load_file(beancount_file)
     assert len(entries) == 2
+
+
+def test_import_flags(config: Config, demo_csv: Path) -> None:
+    config.flags_path.parent.mkdir(exist_ok=True)
+    md5 = "08f11d07d99ede2c9cb385b77ba5d203"
+    config.flags_path.write_text(f'["{md5}"]')
+    beancount_file = demo_csv.with_suffix(".beancount")
+    import_csv(
+        config=config,
+        csv_file=demo_csv,
+        extract=formats.extract_demo,
+        csv_args=dict(delimiter=";"),
+    )
+    print(beancount_file.read_text())
+    entries, errors, options = loader.load_file(beancount_file)
+    assert len(entries) == 3
+
+    query = """
+    select distinct(any_meta("digest")) where flag = "!"
+    """
+    res_type, res_rows = run_query(entries, options, query)
+    assert len(res_rows) == 1
+    assert res_rows[0][0] == md5
 
 
 @pytest.fixture
