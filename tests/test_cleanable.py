@@ -1,5 +1,3 @@
-import pytest
-
 from roastery.importer import Cleanable
 
 

@@ -7,3 +7,9 @@ repos:
     args: ["format"]
     pass_filenames: false
     language: system
+  - id: lint
+    name: Lint
+    entry: rye
+    args: ["lint"]
+    pass_filenames: false
+    language: system
