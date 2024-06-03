@@ -196,12 +196,15 @@ class Entry(Generic[EntryMeta]):
             ),  # beancount will infer the inverse amount automatically.
         ]
 
+        meta = {k: str(v) for k, v in self.meta.items()}
+        meta |= {"digest": self.digest}
+
         return data.Transaction(
             date=self.date,
             postings=postings,
             payee=self.payee.value,
             narration=self.narration.value,
-            meta={k: str(v) for k, v in self.meta.items()},
+            meta=meta,
             tags=self.tags,
             links=self.links,
             flag=self.flag,
