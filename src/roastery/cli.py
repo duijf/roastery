@@ -1,4 +1,6 @@
+import json
 import os
+import sys
 
 import typer
 from rich.traceback import install as install_traceback_handler
@@ -28,5 +30,21 @@ def make_cli(config: Config) -> typer.Typer:
             "http://localhost:5000/",
         )
         os.execvp("fava", ["fava", config.journal_path])
+
+    @cli.command(name="flag")
+    def flag_cmd(digest: str) -> None:
+        """Flag an entry for later review, based on digest."""
+        if len(digest) != 32:
+            print("Digest should be a 32 character md5 hash")
+            sys.exit(1)
+
+        try:
+            flags = set(json.loads(config.flags_path.read_text()))
+        except Exception:
+            flags = set()
+
+        flags.add(digest)
+        config.flags_path.parent.mkdir(exist_ok=True)
+        config.flags_path.write_text(json.dumps(sorted(flags), indent=4) + "\n")
 
     return cli

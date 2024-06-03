@@ -41,7 +41,10 @@ class Config:
     """Filepath to store end user manual edits."""
 
     skip_path: Path
-    """File containing digests of transactions to skip while editing . See :py:mod:`roastery.edit`."""
+    """File containing digests of transactions to skip while editing. See :py:mod:`roastery.edit`."""
+
+    flags_path: Path
+    """File containing digests of transactions that have been flagged for later review."""
 
     default_account_name_suffix: str = "Unknown"
     """Income/Expenses account name suffix to use when no better one is available in
@@ -76,4 +79,5 @@ class Config:
             journal_path=root / "journal/main.beancount",
             manual_edits_path=root / ".roastery/manual-edits.json",
             skip_path=root / ".roastery/skip.json",
+            flags_path=root / ".roastery/flags.json",
         )
