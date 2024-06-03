@@ -51,7 +51,7 @@ class Cleanable:
     def value(self) -> str | None:
         """The first not-None value :py:attr:`~edited`, :py:attr:`~cleaned`, and :py:attr:`~original`"""
         vals = (self.edited, self.cleaned, self.original)
-        return next(arg for arg in vals if arg is not None, None)
+        return next((arg for arg in vals if arg is not None), None)
 
 
 Digest: TypeAlias = str
