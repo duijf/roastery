@@ -43,6 +43,7 @@ class Cleanable:
         >>> Cleanable(original="foo", cleaned="bar", edited="baz").value
         'baz'
     """
+
     original: str | None = None
     cleaned: str | None = None
     edited: str | None = None
@@ -58,7 +59,7 @@ Digest: TypeAlias = str
 """Hash digest of an :class:`Entry`, as a string."""
 
 EntryMeta: TypeAlias = TypeVar("EntryMeta", bound=dict)
-"""Type annotation for the metadata dictionary in Entry. 
+"""Type annotation for the metadata dictionary in Entry.
 
 Import formats can define their own institution specific metadata type if they want
 users to be able to benefit from autocomplete, and things like that."""
@@ -81,12 +82,12 @@ class Entry(Generic[EntryMeta]):
     digest: Digest
     """
     Computed digest of this entry.
-    
+
     Some banks / data sources do not provide a reliable number / ID for
     a given entry (in e.g. a CSV file). Therefore, implementors of this class
     will have to provide a way to compute a digest.
-   
-    This digest is used when storing the user's manual edits. See also 
+
+    This digest is used when storing the user's manual edits. See also
     :py:mod:`roastery.edit`.
     """
 
@@ -110,8 +111,8 @@ class Entry(Generic[EntryMeta]):
 
     meta: EntryMeta = dataclasses.field(default_factory=dict)
     """
-    Dictionary of arbitrary data to attach to the transaction. 
-    
+    Dictionary of arbitrary data to attach to the transaction.
+
     Users can instantiate Entry with a :py:obj:`TypedDict` to get type safety for any extra
     fields they might want to store.
     """
@@ -119,26 +120,26 @@ class Entry(Generic[EntryMeta]):
     tags: set[str] = dataclasses.field(default_factory=set)
     """
     Set of arbitrary strings to tag this transaction with.
-    
+
     See https://beancount.github.io/docs/beancount_language_syntax.html#tags
     """
 
     links: set[str] = dataclasses.field(default_factory=set)
     """
     Set of arbitrary strings to link this transaction with.
-    
+
     See https://beancount.github.io/docs/beancount_language_syntax.html#tags
     """
 
     flag: str = "*"
     """
     One of the strings ``*`` or ``!``.
-   
-    ``*`` 
-      denotes a 'normal' transaction. 
-      
-    ``!`` 
-      means there is something special / that requires attention about this entry. ``!`` transactions 
+
+    ``*``
+      denotes a 'normal' transaction.
+
+    ``!``
+      means there is something special / that requires attention about this entry. ``!`` transactions
       are highlighted in red in Fava.
     """
 
@@ -152,8 +153,8 @@ class Entry(Generic[EntryMeta]):
         asset_account: str,
         meta: EntryMeta | None = None,
         original_payee: str | None = None,
-        original_narration: str | None = None
-    ) -> 'Entry':
+        original_narration: str | None = None,
+    ) -> "Entry":
         """Convenience constructor that can be called by integrators of a new source data type."""
         return cls(
             digest=digest,
@@ -178,14 +179,21 @@ class Entry(Generic[EntryMeta]):
 
     def as_transaction(self) -> data.Transaction:
         """Turn this entry into a beancount ``Transaction``."""
-        def _p(account, amount=None):
-            return data.Posting(account=account, units=amount, cost=None, price=None, flag=None, meta={})
 
-        self.account.original = "Income:Unknown" if self.is_income else "Expenses:Unknown"
+        def _p(account, amount=None):
+            return data.Posting(
+                account=account, units=amount, cost=None, price=None, flag=None, meta={}
+            )
+
+        self.account.original = (
+            "Income:Unknown" if self.is_income else "Expenses:Unknown"
+        )
 
         postings = [
             _p(self.asset_account, self.amount),
-            _p(self.account.value),  # beancount will infer the inverse amount automatically.
+            _p(
+                self.account.value
+            ),  # beancount will infer the inverse amount automatically.
         ]
 
         return data.Transaction(
@@ -225,10 +233,10 @@ For example:
 
    def my_clean(entry: Entry) -> None:
        payee = entry.payee.lower()
-      
+
        if payee == "irs":
            entry.account.cleaned = "Expenses:Tax"
-           
+
        elif payee in {"chipotle", "mcdonalds", "five guys"}:
            entry.account.cleaned = "Expenses:FastFood"
 """
@@ -245,7 +253,7 @@ def import_csv(
     extract: ExtractFn,
     beancount_file: Path = None,
     clean: CleanFn = None,
-    csv_args: dict[str, any] = None
+    csv_args: dict[str, any] = None,
 ) -> None:
     """
     Import a CSV file and write a beancount file.
@@ -269,7 +277,9 @@ def import_csv(
     :param clean: User-implemented cleaning function. See :py:class:`~CleanFn`.
     :param beancount_file: Path of the beancount file to write to.
     """
-    beancount_file = csv_file.with_suffix(".beancount") if beancount_file is None else beancount_file
+    beancount_file = (
+        csv_file.with_suffix(".beancount") if beancount_file is None else beancount_file
+    )
     try:
         manual_edits = json.loads(config.manual_edits_path.read_text())
     except FileNotFoundError:
@@ -278,7 +288,9 @@ def import_csv(
     _csv_args = {} if csv_args is None else csv_args
     _clean = (lambda x: None) if clean is None else clean
 
-    with csv_file.open() as f_csv, beancount_file.open(mode="w", encoding="utf-8") as f_journal:
+    with csv_file.open() as f_csv, beancount_file.open(
+        mode="w", encoding="utf-8"
+    ) as f_journal:
         reader = csv.DictReader(f_csv, **_csv_args)
         for row in reader:
             entry = extract(row)

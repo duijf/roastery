@@ -24,7 +24,9 @@ def make_cli(config: Config) -> typer.Typer:
     @cli.command(name="fava")
     def fava_cmd() -> None:
         """Start fava, the beancount web UI."""
-        typer.launch("http://localhost:5000/", )
+        typer.launch(
+            "http://localhost:5000/",
+        )
         os.execvp("fava", ["fava", config.journal_path])
 
     return cli

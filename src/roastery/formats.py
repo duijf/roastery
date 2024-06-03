@@ -9,14 +9,17 @@ from beancount.core.number import D
 from roastery.importer import Entry
 
 
-DemoCsvRow = TypedDict("DemoCsvRow", {
-    "date": str,
-    "payee": str,
-    "description": str,
-    "amount": str,
-    "type": str,
-    "balance_after": str,
-})
+DemoCsvRow = TypedDict(
+    "DemoCsvRow",
+    {
+        "date": str,
+        "payee": str,
+        "description": str,
+        "amount": str,
+        "type": str,
+        "balance_after": str,
+    },
+)
 
 
 def extract_demo(row: DemoCsvRow) -> Entry:
@@ -33,29 +36,32 @@ def extract_demo(row: DemoCsvRow) -> Entry:
 
 
 # CSV columns of the
-AsnCsvRow = TypedDict("AsnCsvRow", {
-    "Boekingsdatum": str,
-    "Opdrachtgeversrekening": str,
-    "Tegenrekeningnummer": str,
-    "Naam tegenrekening": str,
-    # Begin: unused
-    "Adres": str,
-    "Postcode": str,
-    "Plaats": str,
-    # End: unused
-    "Valutasoort rekening": str,
-    "Saldo rekening voor mutatie": str,
-    "Valutasoort mutatie": str,
-    "Transactiebedrag": str,
-    "Journaaldatum": str,
-    "Valutadatum": str,
-    "Interne transactiecode": str,
-    "Globale transactiecode": str,
-    "Volgnummer transactie": str,
-    "Betalingskenmerk": str,
-    "Omschrijving": str,
-    "Afschriftnummer": str,
-})
+AsnCsvRow = TypedDict(
+    "AsnCsvRow",
+    {
+        "Boekingsdatum": str,
+        "Opdrachtgeversrekening": str,
+        "Tegenrekeningnummer": str,
+        "Naam tegenrekening": str,
+        # Begin: unused
+        "Adres": str,
+        "Postcode": str,
+        "Plaats": str,
+        # End: unused
+        "Valutasoort rekening": str,
+        "Saldo rekening voor mutatie": str,
+        "Valutasoort mutatie": str,
+        "Transactiebedrag": str,
+        "Journaaldatum": str,
+        "Valutadatum": str,
+        "Interne transactiecode": str,
+        "Globale transactiecode": str,
+        "Volgnummer transactie": str,
+        "Betalingskenmerk": str,
+        "Omschrijving": str,
+        "Afschriftnummer": str,
+    },
+)
 
 
 class AsnMeta(TypedDict):

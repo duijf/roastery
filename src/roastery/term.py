@@ -17,6 +17,7 @@ User input
 .. autofunction:: roastery.term.ask
 .. autofunction:: roastery.term.select_fuzzy_search
 """
+
 import subprocess
 
 from prompt_toolkit import prompt
@@ -100,12 +101,23 @@ def ask(question: str, *, default: str = None) -> str:
     :param question: Question to prompt the user with.
     :param default: Default to pre-populate the readline env
     """
-    display = FormattedText([("bold blue", f"| {question} > ",)])
+    display = FormattedText(
+        [
+            (
+                "bold blue",
+                f"| {question} > ",
+            )
+        ]
+    )
     # The color depth is so that `blue` refers to the color scheme in
     # use by the terminal. This means we respect the theme that was set
     # by the user.
-    res = prompt(display, editing_mode=EditingMode.VI, default=default,
-                 color_depth=ColorDepth.ANSI_COLORS_ONLY)
+    res = prompt(
+        display,
+        editing_mode=EditingMode.VI,
+        default=default,
+        color_depth=ColorDepth.ANSI_COLORS_ONLY,
+    )
     print()
     return res
 
@@ -127,7 +139,9 @@ def select_fuzzy_search(
     fzf_input = "\n".join(options)
     fzf_cmd = ["fzf", "--height", "~30%", f"--prompt=| {prompt} > "]
 
-    fzf_proc = subprocess.run(fzf_cmd, input=fzf_input, text=True, stdout=subprocess.PIPE)
+    fzf_proc = subprocess.run(
+        fzf_cmd, input=fzf_input, text=True, stdout=subprocess.PIPE
+    )
     fzf_choice = fzf_proc.stdout.strip()
 
     if fzf_choice == "":
@@ -135,7 +149,10 @@ def select_fuzzy_search(
         raise KeyboardInterrupt
 
     # Log the users choice in the same style as the FZF prompt.
-    log(f"[bold blue]{prompt} >[/bold blue] [bold]{fzf_choice}[/bold]", style="bold blue")
+    log(
+        f"[bold blue]{prompt} >[/bold blue] [bold]{fzf_choice}[/bold]",
+        style="bold blue",
+    )
 
     assert fzf_choice in options
     return fzf_choice

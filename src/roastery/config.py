@@ -16,6 +16,7 @@ API
 .. autoclass:: Config
    :members:
 """
+
 import dataclasses
 import os
 import sys
@@ -54,7 +55,7 @@ class Config:
      """
 
     @classmethod
-    def from_env(cls, project_root: Path = None) -> 'Config':
+    def from_env(cls, project_root: Path = None) -> "Config":
         """
         Create a :py:class:`Config` based on the `Environment variables`_ that are set.
 

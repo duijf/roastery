@@ -16,8 +16,8 @@ html_theme = "furo"
 html_title = "<code>roastery</code>"
 
 autodoc_default_options = {
-  "undoc-members": True,
-  "member-order": "bysource",
+    "undoc-members": True,
+    "member-order": "bysource",
 }
 autodoc_typehints = "both"
 
@@ -27,22 +27,20 @@ autodoc_type_aliases = {
 }
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None),
-    'fava': ("https://beancount.github.io/fava/", None),
+    "python": ("https://docs.python.org/3", None),
+    "fava": ("https://beancount.github.io/fava/", None),
 }
 
 nitpicky = True
 nitpick_ignore = [
-  ("py:class", r"any"),
-  ("py:class", r"roastery.importer.CleanFn"),
-  ("py:class", r"roastery.importer.ExtractFn"),
+    ("py:class", r"any"),
+    ("py:class", r"roastery.importer.CleanFn"),
+    ("py:class", r"roastery.importer.ExtractFn"),
 ]
 nitpick_ignore_regex = [
-  ("py:class", r"beancount.*"),
+    ("py:class", r"beancount.*"),
 ]
 
-exclude_patterns = [
-  r"getting-started/finance.*"
-]
+exclude_patterns = [r"getting-started/finance.*"]
 
 todo_include_todos = True

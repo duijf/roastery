@@ -6,6 +6,7 @@ This is one of the nice tools that Roastery has on offer and is what allows you 
 easily and quickly edit large amounts of transaction data. Any edits made by the
 end user are saved in a JSON file that can be version controlled with git.
 """
+
 import datetime
 import json
 import typing
@@ -45,6 +46,7 @@ class ManualEdits(typing.TypedDict):
 
 class Unprocessed(typing.Protocol):
     """Utility type representing an unprocessed entry."""
+
     date: datetime.date
     position: Position
     payee: str
@@ -97,9 +99,9 @@ def main(config: Config) -> None:
 
     accounts = {entry.account for entry in entries if isinstance(entry, data.Open)}
     accounts = [
-        account for account in accounts
-        if "Assets:Bank" not in account
-            and "Equity:Opening-Balances" not in account
+        account
+        for account in accounts
+        if "Assets:Bank" not in account and "Equity:Opening-Balances" not in account
     ]
 
     to_save = defaultdict(dict)
@@ -111,12 +113,16 @@ def main(config: Config) -> None:
                 continue
 
             display(item)
-            account_or_skip = term.select_fuzzy_search("Select account", options=accounts + ["Skip"])
+            account_or_skip = term.select_fuzzy_search(
+                "Select account", options=accounts + ["Skip"]
+            )
 
             if account_or_skip == "Skip":
                 to_skip.add(item.digest)
             else:
-                payee_pretty = item.payee.title() if item.payee.isupper() else item.payee
+                payee_pretty = (
+                    item.payee.title() if item.payee.isupper() else item.payee
+                )
                 item_edits = {
                     "account": account_or_skip,
                     "payee": term.ask("Payee", default=payee_pretty),
