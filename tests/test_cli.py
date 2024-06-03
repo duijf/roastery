@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 from typing import Iterator
 
 import pytest
@@ -39,11 +38,6 @@ def test_flag_cmd_update_in_place(config: Config, cli: Typer) -> None:
     assert res.exit_code == 0
     assert config.flags_path.exists()
     assert json.loads(config.flags_path.read_text()) == [hash, "foo"]
-
-
-@pytest.fixture()
-def config(tmp_path: Path) -> Iterator[Config]:
-    yield Config.from_env(project_root=tmp_path)
 
 
 @pytest.fixture()
