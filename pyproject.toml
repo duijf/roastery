@@ -1,6 +1,6 @@
 [project]
 name = "roastery"
-version = "0.20240603-dev"
+version = "0.20240603-dev1"
 dependencies = [
     "beancount>=2.0.0",
     "typer>=0.12.0",
