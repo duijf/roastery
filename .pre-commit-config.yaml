@@ -13,3 +13,9 @@ repos:
     args: ["lint"]
     pass_filenames: false
     language: system
+  - id: test
+    name: Test
+    entry: rye
+    args: ["test"]
+    pass_filenames: false
+    language: system
