@@ -1,22 +1,3 @@
-"""
-Variables and settings for Roastery. Many functions in Roastery's Python API
-take an instance of the :py:class:`roastery.config.Config`.
-
-Environment variables
----------------------
-
-.. envvar:: PROJECT_ROOT
-
-   Path to a directory containing the root of your financial statements.
-   Used as the base path for all other Paths in :py:func:`roastery.config.Config.from_env`.
-
-API
----
-
-.. autoclass:: Config
-   :members:
-"""
-
 import dataclasses
 import datetime
 import os
@@ -26,52 +7,18 @@ from pathlib import Path
 
 @dataclasses.dataclass
 class Config:
-    """
-    Variables and settings for ``roastery``.
-
-    Convenience constructor: :py:obj:`roastery.config.Config.from_env()`
-    """
-
     statements_dir: Path
-    """Directory of statements"""
-
     journal_path: Path
-    """Location of the main journal."""
-
     manual_edits_path: Path
-    """Filepath to store end user manual edits."""
-
     skip_path: Path
-    """File containing digests of transactions to skip while editing. See :py:mod:`roastery.edit`."""
-
     flags_path: Path
-    """File containing digests of transactions that have been flagged for later review."""
 
     default_account_name_suffix: str = "Unknown"
-    """Income/Expenses account name suffix to use when no better one is available in
-    :py:obj:`roastery.importer.Entry.as_transaction`
-
-    ``"Expenses:Unknown"``
-      When :py:obj:`roastery.importer.Entry.is_expense` returns ``True``.
-
-    ``"Income:Unknown"``
-      When :py:obj:`roastery.importer.Entry.is_income` returns ``True``.
-     """
 
     do_not_import_before: datetime.date = None
-    """Date before which to skip importing transactions.
-
-    This is useful if you want to keep a your entire history of financial statements and
-    gradually import / classify them."""
 
     @classmethod
     def from_env(cls, project_root: Path = None) -> "Config":
-        """
-        Create a :py:class:`Config` based on the `Environment variables`_ that are set.
-
-        This is a convenience method. If you want different defaults you can instantiate
-        this class yourself.
-        """
         try:
             if project_root is None:
                 root = Path(os.environ["PROJECT_ROOT"])

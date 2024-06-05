@@ -1,12 +1,3 @@
-"""
-Find all unclassified / unprocessed transactions and prompt the user to classify
-and edit them.
-
-This is one of the nice tools that Roastery has on offer and is what allows you to
-easily and quickly edit large amounts of transaction data. Any edits made by the
-end user are saved in a JSON file that can be version controlled with git.
-"""
-
 import datetime
 import json
 import typing
@@ -29,14 +20,6 @@ __all__ = [
 
 
 class ManualEdits(typing.TypedDict):
-    """
-    Manually edits applied to an :py:class:`roastery.importer.Entry` by a user.
-
-    User-overridden data is stored in a JSON file that is indexed by the
-    :py:obj:`roastery.importer.Entry.digest`. Roastery loads these manual edits from
-    :py:obj:`roastery.config.Config.manual_edits_path`.
-    """
-
     payee: str
     account: str
     narration: str
@@ -45,8 +28,6 @@ class ManualEdits(typing.TypedDict):
 
 
 class Unprocessed(typing.Protocol):
-    """Utility type representing an unprocessed entry."""
-
     date: datetime.date
     position: Position
     payee: str
@@ -86,15 +67,6 @@ def get_unprocessed(entries, options) -> list[Unprocessed]:
 
 
 def main(config: Config) -> None:
-    """
-    Find all unclassified transactions and prompt the user to assign them to a category.
-
-    This function depends on FZF to provide the interactive prompt that allows the user to
-    select their preferred category. This function assumes that ``fzf`` is installed and
-    available on ``PATH``.
-
-    :param config: The configuration to use to find files on disk.
-    """
     entries, errors, options = loader.load_file(config.journal_path)
 
     accounts = {entry.account for entry in entries if isinstance(entry, data.Open)}
