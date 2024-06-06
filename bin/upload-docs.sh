@@ -4,6 +4,7 @@ set -eufo pipefail
 git branch -D gh-pages || true
 rye run sphinx-build --write-all $PROJECT_ROOT/documentation $PROJECT_ROOT/docs
 touch $PROJECT_ROOT/docs/.nojekyll
+echo roastery.duijf.io > $PROJECT_ROOT/docs/CNAME
 git checkout -b gh-pages
 git add -f docs
 git commit -m "Build docs"
