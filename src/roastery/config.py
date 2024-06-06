@@ -65,40 +65,71 @@ class Config:
     gradually import / classify them."""
 
     @classmethod
-    def defaults(cls, project_root: Path = None) -> "Config":
+    def with_defaults(
+        cls,
+        *,
+        project_root: Path = None,
+        statements_dir: Path = None,
+        journal_path: Path = None,
+        manual_edits_path: Path = None,
+        skip_path: Path = None,
+        flags_path: Path = None,
+        default_account_name_suffix: str = "Unknown",
+        do_not_import_before: datetime.date = None,
+    ) -> "Config":
         """
         Create a :py:class:`Config` with default values.
 
-        This is a convenience method that allows users to quickly instantiate a
-        :class:`~roastery.config.Config` object. If you want to use different
-        settings you can either mutate the return value of this method or
-        instantiate :py:class:`Config` directly.
+        This is a convenience method that allows users to quickly instantiate
+        :class:`~roastery.config.Config`. You can override the default values
+        by passing in different parameters.
 
         The ``project_root`` parameter or ``PROJECT_ROOT`` environment variable
         is used as a base path for all filesystem related settings.
 
-        :param project_root: Base path to use for all filesystem paths instead
-          of the ``PROJECT_ROOT`` environment variable.
+        :param project_root: Base path to use for all filesystem paths. If not
+          provided, the ``PROJECT_ROOT`` environment variable is used.
+        :param statements_dir: See :py:obj:`Config.statements_dir`
+        :param journal_path: See :py:obj:`Config.journal_path`
+        :param manual_edits_path: See :py:obj:`Config.manual_edits_path`
+        :param skip_path: See :py:obj:`Config.skip_path`
+        :param flags_path: See :py:obj:`Config.flags_path`
+        :param default_account_name_suffix: See :py:obj:`Config.default_account_name_suffix`
+        :param do_not_import_before: See :py:obj:`Config.do_not_import_before`
+
         :return: A new :class:`~roastery.config.Config` instance.
-        :raises SystemExit: If the ``PROJECT_ROOT`` environment variable is not
-          set and ``project_root`` is not provided.
+        :raises SystemExit: If one of the filesystem paths cannot be inferred
+          from the ``project_root`` parameter or the ``PROJECT_ROOT`` environment
+          variable.
         """
-        try:
-            if project_root is None:
-                root = Path(os.environ["PROJECT_ROOT"])
-            else:
-                root = project_root
-        except KeyError:
-            print(
-                "Please pass the `project_root` parameter or set the `PROJECT_ROOT` env "
-                + "var to use `Config.defaults()`"
-            )
-            sys.exit(1)
+
+        should_infer_from_env_var = any(
+            [
+                statements_dir is None,
+                journal_path is None,
+                manual_edits_path is None,
+                skip_path is None,
+                flags_path is None,
+            ]
+        )
+
+        if project_root is None and should_infer_from_env_var:
+            try:
+                project_root = Path(os.environ["PROJECT_ROOT"])
+            except KeyError:
+                print(
+                    "Please pass the `project_root` parameter or set the `PROJECT_ROOT` env "
+                    + "var to use `Config.defaults()`"
+                )
+                sys.exit(1)
 
         return cls(
-            statements_dir=root / "statements",
-            journal_path=root / "journal/main.beancount",
-            manual_edits_path=root / ".roastery/manual-edits.json",
-            skip_path=root / ".roastery/skip.json",
-            flags_path=root / ".roastery/flags.json",
+            statements_dir=statements_dir or (project_root / "statements"),
+            journal_path=journal_path or (project_root / "journal/main.beancount"),
+            manual_edits_path=manual_edits_path
+            or (project_root / ".roastery/manual-edits.json"),
+            skip_path=skip_path or (project_root / ".roastery/skip.json"),
+            flags_path=flags_path or (project_root / ".roastery/flags.json"),
+            default_account_name_suffix=default_account_name_suffix,
+            do_not_import_before=do_not_import_before,
         )
