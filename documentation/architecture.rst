@@ -49,18 +49,14 @@ descriptions and metadata, and are either classified as ``Income:Unknown`` or
 
 Roastery provides two methods to clean up transaction data:
 
-- **Manual cleanup** --- Roastery provides CLI utility that will allow you
-  to clean up every transaction in `Income:Unknown` and `Expenses:Unknown`.
+- **Manual cleanup** --- Roastery provides a CLI command that will prompt you
+  to classify and clean up every transaction in the ``Income:Unknown`` and
+  ``Expenses:Unknown`` accounts.
 - **Automatic cleanup** --- Users can also write rules in Python to
-  automatically clean up and classify transactions.
+  automatically clean up and classify transactions. (Attempting to automate all
+  cleanup will likely have deminishing returns)
 
 .. tip::
 
-   Attempting to automate all manual cleanup / classification has deminishing
-   returns. You will likely end up with a large amount of one-off rules. Prefer to
-   use Roastery's CLI utilities instead.
-
-Advice: start by manually cleaning your transactions. This isn't as tedious as
-you may think if you use the CLI utilities from Roastery. Write rules to
-automate cleanup once you find yourself repeatedly performing the same bit of
-clean up.
+   Start by manually cleaning your transactions. Invest in automation once you
+   find yourself repeatedly cleaning up the same kind of transactions.
