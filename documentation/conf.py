@@ -34,6 +34,7 @@ intersphinx_mapping = {
 nitpicky = True
 nitpick_ignore = [
     ("py:class", r"any"),
+    ("py:class", r"typer.main.Typer"),
     ("py:class", r"roastery.importer.CleanFn"),
     ("py:class", r"roastery.importer.ExtractFn"),
 ]
