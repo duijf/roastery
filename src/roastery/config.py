@@ -8,7 +8,7 @@ Environment variables
 .. envvar:: PROJECT_ROOT
 
    Path to a directory containing the root of your financial statements.
-   Used as the base path for all other Paths in :py:func:`roastery.config.Config.defaults`.
+   Used as the base path for all other Paths in :py:func:`roastery.config.Config.with_defaults`.
 
 API
 ---
@@ -29,7 +29,7 @@ class Config:
     """
     Variables and settings for ``roastery``.
 
-    Convenience constructor: :py:obj:`roastery.config.Config.defaults()`
+    Convenience constructor: :py:obj:`roastery.config.Config.with_defaults()`
     """
 
     statements_dir: Path
@@ -119,7 +119,7 @@ class Config:
             except KeyError:
                 print(
                     "Please pass the `project_root` parameter or set the `PROJECT_ROOT` env "
-                    + "var to use `Config.defaults()`"
+                    + "var to use `Config.with_defaults()`"
                 )
                 sys.exit(1)
 
