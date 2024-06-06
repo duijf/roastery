@@ -8,4 +8,4 @@ from roastery import Config
 
 @pytest.fixture()
 def config(tmp_path: Path) -> Iterator[Config]:
-    yield Config.from_env(project_root=tmp_path)
+    yield Config.defaults(project_root=tmp_path)

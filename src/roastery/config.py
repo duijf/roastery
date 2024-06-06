@@ -8,7 +8,7 @@ Environment variables
 .. envvar:: PROJECT_ROOT
 
    Path to a directory containing the root of your financial statements.
-   Used as the base path for all other Paths in :py:func:`roastery.config.Config.from_env`.
+   Used as the base path for all other Paths in :py:func:`roastery.config.Config.defaults`.
 
 API
 ---
@@ -29,7 +29,7 @@ class Config:
     """
     Variables and settings for ``roastery``.
 
-    Convenience constructor: :py:obj:`roastery.config.Config.from_env()`
+    Convenience constructor: :py:obj:`roastery.config.Config.defaults()`
     """
 
     statements_dir: Path
@@ -65,12 +65,23 @@ class Config:
     gradually import / classify them."""
 
     @classmethod
-    def from_env(cls, project_root: Path = None) -> "Config":
+    def defaults(cls, project_root: Path = None) -> "Config":
         """
-        Create a :py:class:`Config` based on the `Environment variables`_ that are set.
+        Create a :py:class:`Config` with default values.
 
-        This is a convenience method. If you want different defaults you can instantiate
-        this class yourself.
+        This is a convenience method that allows users to quickly instantiate a
+        :class:`~roastery.config.Config` object. If you want to use different
+        settings you can either mutate the return value of this method or
+        instantiate :py:class:`Config` directly.
+
+        The ``project_root`` parameter or ``PROJECT_ROOT`` environment variable
+        is used as a base path for all filesystem related settings.
+
+        :param project_root: Base path to use for all filesystem paths instead
+          of the ``PROJECT_ROOT`` environment variable.
+        :return: A new :class:`~roastery.config.Config` instance.
+        :raises SystemExit: If the ``PROJECT_ROOT`` environment variable is not
+          set and ``project_root`` is not provided.
         """
         try:
             if project_root is None:
@@ -78,7 +89,10 @@ class Config:
             else:
                 root = project_root
         except KeyError:
-            print("Please set the `PROJECT_ROOT` env var to use `Config.from_env()`.")
+            print(
+                "Please pass the `project_root` parameter or set the `PROJECT_ROOT` env "
+                + "var to use `Config.defaults()`"
+            )
             sys.exit(1)
 
         return cls(
