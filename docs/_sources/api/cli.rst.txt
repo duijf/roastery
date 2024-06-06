@@ -1,0 +1,4 @@
+CLI
+===
+
+.. automodule:: roastery.cli
