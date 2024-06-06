@@ -1,3 +1,43 @@
+"""
+This module provides you with a common starter kit of commands that are useful in Beancount projects.
+
+.. code-block:: python
+
+   # cli.py
+   from roastery import make_cli, Config
+
+   config = Config.with_defaults()
+   roastery_cli = make_cli(config)
+   roastery_cli()
+
+This will result in the following CLI:
+
+.. code-block::
+
+   $ ./cli.py
+
+    Usage: ./cli.py [OPTIONS] COMMAND [ARGS]...
+
+   ╭─ Options ───────────────────────────────────────────────────────────╮
+   │ --help          Show this message and exit.                         │
+   ╰─────────────────────────────────────────────────────────────────────╯
+   ╭─ Commands ──────────────────────────────────────────────────────────╮
+   │ edit     Edit transactions that haven't been classified yet.        │
+   │ fava     Start fava, the beancount web UI.                          │
+   │ flag     Flag an entry for later review, based on digest.           │
+   ╰─────────────────────────────────────────────────────────────────────╯
+
+Command reference
+-----------------
+
+.. todo:: Reference for the default commands
+
+API
+---
+
+.. autofunction:: make_cli
+"""
+
 import json
 import os
 import sys
@@ -14,7 +54,11 @@ __all__ = [
 
 
 def make_cli(config: Config) -> typer.Typer:
-    """Create a roastery CLI application from the given config."""
+    """Create a roastery CLI application from the given config.
+
+    This function returns a Typer instance. You can customize the the instance with
+    your own commands. See :doc:`/getting-started/index` for more information.
+    """
     install_traceback_handler(show_locals=True)
     cli = typer.Typer(no_args_is_help=True, add_completion=False)
 

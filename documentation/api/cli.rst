@@ -1,6 +1,4 @@
 CLI
 ===
 
-.. todo::
-
-   API documentation for the CLI module.
+.. automodule:: roastery.cli
